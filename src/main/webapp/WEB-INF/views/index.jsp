@@ -58,8 +58,12 @@
 		 <c:if test = "${list.size() > 0}">
     	<table id="table">
             <tbody>
-                <tr><th>ID</th><th>Title</th><th>Content</th>
-    				<th>Status</th><th>Create At</th>
+                <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Content</th>
+    			<th>Status</th>
+    			<th>Create At</th>
                 </tr>
                  <c:forEach items="${list}" var="noteVar">
     	            <tr>

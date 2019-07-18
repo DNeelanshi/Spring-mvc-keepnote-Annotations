@@ -3,6 +3,7 @@ package com.stackroute.keepnote.repository;
 import java.util.*;
 
 import com.stackroute.keepnote.model.Note;
+import org.springframework.stereotype.Component;
 
 /*
  * This class contains the code for data storage interactions and methods

@@ -3,6 +3,7 @@ package com.stackroute.keepnote.controller;
 
 import com.stackroute.keepnote.model.Note;
 import com.stackroute.keepnote.repository.NoteRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -38,11 +39,16 @@ public class NoteController {
 	 * Retrieve the Note object from the context.
 	 * Retrieve the NoteRepository object from the context.
 	 */
-	ApplicationContext applicationContext = new ClassPathXmlApplicationContext("beans.xml");
-	Note note = (Note) applicationContext.getBean("note");
-	NoteRepository noteRepository = applicationContext.getBean("noteRepository",NoteRepository.class);
-	
-	/*Define a handler method to read the existing notes by calling the getAllNotes() method 
+
+	@Autowired
+	NoteRepository noteRepository;
+
+
+	@Autowired
+	Note note;
+
+
+	/*Define a handler method to read the existing notes by calling the getAllNotes() method
 	 * of the NoteRepository class and add it to the ModelMap which is an implementation of Map 
 	 * for use when building model data for use with views. it should map to the default URL i.e. "/" */
 
@@ -67,9 +73,9 @@ public class NoteController {
 
 
 	@RequestMapping(value = "/saveNote")
-	public String addNotes(@RequestParam(value = "noteId") int id, @RequestParam(value = "noteTitle") String noteTitle, @RequestParam(value = "noteContent") String noteContent, @RequestParam(value = "noteStatus") String noteStatus, ModelMap modalMap) {
+	public String addNotes(@RequestParam(value = "noteId") int id, @RequestParam(value = "noteTitle") String noteTitle, @RequestParam(value = "noteContent") String noteContent, @RequestParam(value = "noteStatus") String noteStatus, ModelMap modalMap,Note note) {
 		if(!noteRepository.exists(id)) {
-			Note note = new Note();
+//			Note note = new Note();
 			note.setNoteId(id);
 			note.setNoteTitle(noteTitle);
 			note.setNoteContent(noteContent);
@@ -83,6 +89,7 @@ public class NoteController {
 		}
 //		List<Note> list = noteRepository.getAllNotes();
 		modalMap.addAttribute("list",noteRepository.getAllNotes());
+		System.out.println(noteRepository.getAllNotes().toString());
 
 		return "index";
 	}
